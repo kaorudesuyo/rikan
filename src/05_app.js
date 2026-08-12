@@ -386,7 +386,7 @@ function baseVerdict(base,bs,medAll){
       '規模・流動性は運用では動かせない、資産そのものの性格を示します。';
     const p3='<b>環境・省エネ性能は認証と実測エネルギー効率の合成です。</b>両者の順位相関はρ=−0.012とほぼ無関係で、'+
       '認証を持っていても光熱費が重い物件、認証はないが効率の良い物件がそれぞれ存在します。どちらが弱いかで打ち手が変わります。';
-    const p4='上のプルダウンで投資法人・用途を絞り込み、物件を選ぶと、その物件の五角形が金色で重なり、軸ごとの差分（pt）と個別の総評が表示されます。';
+    const p4='上のプルダウンで投資法人を選ぶと物件を絞り込めます。物件を選ぶと、その物件の五角形が金色で重なり、軸ごとの差分（pt）と個別の総評が表示されます。';
     return '<p>'+p1+'</p><p>'+p2+'</p><p>'+p3+'</p><p>'+p4+'</p>'}
   const diff=x=>((x.p-50>=0?'+':'')+(x.p-50).toFixed(0));
   const p1=groupLabel()+'に該当する'+base.length+'物件の平均像です。評価対象全体（各軸50）に対し、'+
@@ -477,7 +477,7 @@ function drawSpectrum(){
 function drawKPI(){const cert=F.filter(d=>d.cn>0).length;
   const exc=F.filter(d=>d.pt).length, noy=F.filter(d=>d.yra==null&&!d.pt).length;
   const apAll=F.filter(d=>d.ap).reduce((s,d)=>s+d.ap,0), apC=F.filter(d=>d.cn&&d.ap).reduce((s,d)=>s+d.ap,0);
-  const it=[[jn(F.length),'物件','絞込後の対象物件数（期中譲渡'+(D.length-BASE.length)+'件を除く）'+HB('universe')],
+  const it=[[jn(F.length),'物件','対象物件数（期中譲渡'+(D.length-BASE.length)+'件を除く）'+HB('universe')],
     [fmt(med(FY.map(d=>d.yra))),'%','粗利回り中央値・鑑定ベース（n='+FY.length+'／収入非開示'+noy+'件・期中取得'+exc+'件を除く）'+HB('base')],
     [fmt(med(F.filter(d=>d.yna!=null).map(d=>d.yna))),'%','NOI利回り中央値・鑑定ベース（n='+F.filter(d=>d.yna!=null).length+'）'+HB('yn')],
     [F.length?Math.round(cert/F.length*100):0,'%','環境認証の保有率・物件数ベース（'+cert+'物件／評価額ベースなら'+
@@ -549,7 +549,7 @@ function drawCross(){
   const e=el('crossNote');
   if(e){const nx=F.filter(d=>xf(d)!=null).length, ny=F.filter(d=>yf(d)!=null).length;
     const corps=[...new Set(v.map(d=>d.l))];
-    e.innerHTML='対象 <b>'+v.length+'物件</b>（絞込後'+F.length+'物件のうち、横軸「'+esc(MX[0])+'」を算定できるのが '+nx+
+    e.innerHTML='対象 <b>'+v.length+'物件</b>（'+USE_L[ST.scope]+'全'+F.length+'物件のうち、横軸「'+esc(MX[0])+'」を算定できるのが '+nx+
       '件、縦軸「'+esc(MY[0])+'」が '+ny+'件、両方揃うのが '+v.length+'件）／'+corps.length+'法人'+
       (ST.x==='age'?'<br><span style="color:#c98c8c">築年数は竣工年月を開示する9法人のみが対象です。NBF・JRE・KDX・ICG・NUD・HFRは横軸を算定できず、この図から除外されています</span>'+HB('agebias'):'')+
       (['yna','mgn'].indexOf(ST.y)>=0||['yna','mgn'].indexOf(ST.x)>=0?'<br><span style="color:#c98c8c">NOI関連の指標は費用内訳を開示する5法人のみが対象です</span>':'')+
@@ -822,7 +822,7 @@ function drawList(){const rows=sorted(),c=el('plist');
 el('more').onclick=()=>{ST.page++;drawList()};
 
 /* ---- playbook / reading / hits ---- */
-function drawPlays(){const V=FY,O2=FO,lab=ST.use==='ALL'?'全用途':USE_L[ST.use];
+function drawPlays(){const V=FY,O2=FO,ALLV=F,lab=USE_L[ST.scope];
   /* 根拠値は絞込条件から再計算する。0%（計上なし）は費用が軽いのではなく
      テナント直接負担等による非計上なので、費用の分位計算からは除外する。 */
   const cst=k=>{const a=O2.filter(d=>d[k]!=null&&d[k]>0).map(d=>d[k]);
@@ -838,7 +838,47 @@ function drawPlays(){const V=FY,O2=FO,lab=ST.use==='ALL'?'全用途':USE_L[ST.us
   const occStrat=stratDiff(V.filter(d=>d.occ!=null),d=>d.yra,d=>d.occ>=99);
   const certStrat=stratDiff(V,d=>d.yra,d=>!!d.cn);
   const ageN=V.filter(d=>d.age!=null).length;
-  const P=[
+  /* 提言はオフィスと住宅で内容そのものを分ける。
+     実測すると構造が大きく異なるため（住宅は水道光熱費の64%がテナント直接負担で
+     オーナー側の削減余地が小さく、修繕費は原状回復が定常発生して中央値7.0%とオフィスの2.8倍、
+     稼働率は満室が24%にとどまりリーシングが常時発生する）、
+     同じ打ち手を数値だけ変えて示すのは実務上ミスリードになる。 */
+  const RS=ST.scope==='RS';
+  const P = RS ? [
+   ['AM / 取得','住宅の利回りは「立地の実需」でほぼ決まる',
+    '住宅は事業用と違い、賃料が景気ではなく<b>その街に住みたい人がどれだけいるか</b>で決まります。単身向けなら駅からの距離と沿線の勤務地アクセス、ファミリー向けなら学区と生活利便。この実需の厚みが、そのまま長期の稼働と賃料水準を規定します。<br>オフィスのように大型化で有利になる構造は薄く、むしろ<b>1棟あたりが小さく数を持つ</b>ことでリスクを分散するのが住宅の定石です。',
+    lab+'の粗利回り中央値（鑑定評価額ベース）: 都心5区 <b>'+S(g(d=>d.a==='C5'))+'</b> ⇄ 地方・他3大都市圏 <b>'+S(g(d=>d.a==='RG'||d.a==='M3'))+'</b>'+
+    '<br>1物件あたりの鑑定評価額 中央値 <b>'+jn(med(ALLV.filter(d=>d.ap).map(d=>d.ap)))+' 百万円</b>'+
+    '<span style="color:#5a5f68">（オフィスの中央値は5,905百万円）</span>'],
+   ['PM / リーシング','住宅は「空室が出ること」を前提に、空室期間を縮める',
+    '住宅の稼働率は満室が<b>全体の24%</b>にとどまります（オフィスは73%）。入退去が常態である以上、目標は「空室をなくす」ことではなく<b>空室期間（ダウンタイム）を1日でも短くする</b>ことです。<br>退去予告から募集開始までの日数、原状回復工事の着手までの待ち時間、内見から申込までの導線。この3つを詰めるのが実務の中心で、賃料を下げる前にまず着手すべき領域です。仲介会社への広告料（AD）の出し方も、季節や競合状況に応じて機動的に変えます。',
+    '稼働率の分布: 中央値 <b>'+fmt(med(ALLV.filter(d=>d.occ!=null).map(d=>d.occ)),1)+'%</b>／下位10% <b>'+
+    fmt(q(ALLV.filter(d=>d.occ!=null).map(d=>d.occ),.1),1)+'%</b>'+
+    '<span style="color:#5a5f68">（満室の物件は'+fmt(ALLV.filter(d=>d.occ===100).length/ALLV.filter(d=>d.occ!=null).length*100,0)+'%）</span>'+
+    '<br><span style="color:#5a5f68">オフィスは満室73%・下位10%でも94.8%。住宅は空室が常時発生する前提で運営設計する必要があります</span>'],
+   ['BM / 原状回復','住宅のコスト勝負は原状回復。単価と工期を管理できるかで差がつく',
+    '住宅の修繕費は対収入比の中央値が <b>7.0%</b> と、オフィス（2.5%）の約2.8倍です。しかも上位10%は75%に達し、<b>ばらつきが極端に大きい</b>のが特徴です。これは大規模修繕ではなく、退去のたびに発生する<b>原状回復工事</b>が積み上がるためです。<br>打ち手は、①クロス・床材の仕様を標準化して単価を固定する、②複数物件をまとめて施工会社と年間契約する、③通常損耗と故意過失の負担区分を契約と精算で明確にする、④工期を短縮して次の募集開始を早める。工期短縮は費用と稼働の両方に効きます。',
+    '修繕費の対収入比: 中央値 <b>'+fmt(med(O2.filter(d=>d.rp>0).map(d=>d.rp)),1)+'%</b>／上位10% <b>'+
+    fmt(q(O2.filter(d=>d.rp>0).map(d=>d.rp),.9),1)+'%</b>'+
+    '<span style="color:#5a5f68">(n='+O2.filter(d=>d.rp>0).length+')</span>'+
+    '<br><span style="color:#c98c8c">ばらつきの大きさは、退去のタイミングと原状回復の単価管理の巧拙をそのまま映しています</span>'],
+   ['BM / 光熱費','住宅の水道光熱費は入居者負担が中心。オーナー側の削減余地は共用部に限られる',
+    '住宅では水道光熱費を計上していない物件が <b>開示分の64%</b> を占めます（オフィスは9%）。各戸の電気・ガス・水道は入居者が直接契約するのが一般的だからです。<br>したがってオーナーが削れるのは<b>共用部の照明・エレベーター・給水ポンプ・宅配ボックス</b>などに限られます。金額規模は小さいものの、LED化と人感センサー、ポンプのインバータ化は投資回収年数が読みやすく、実行しやすい施策です。オフィスのような熱源制御や外気冷房といった大がかりな話にはなりません。',
+    '水道光熱費の対収入比: 中央値 <b>'+(ut.n>=5?fmt(ut.m,1)+'%':'—')+'</b>'+
+    '<span style="color:#5a5f68">(計上あり n='+ut.n+'／計上なし '+ut.zero+'件)</span>'+
+    '<br><span style="color:#5a5f68">オフィスの中央値は6.9%。住宅で対収入比が低いのは省エネだからではなく、費用の負担者が違うためです</span>'],
+   ['PM × BM / 委託契約','戸数が多いほど、管理の標準化が効く',
+    '住宅は1棟あたりが小さく戸数が多いため、物件ごとに個別対応していると管理コストが膨らみます。逆に言えば、<b>業務を標準化して量をまとめるほど単価が下がる</b>構造です。<br>①募集条件・原状回復仕様・退去精算のルールを統一する、②近隣物件をまとめて1社に委託して巡回効率を上げる、③入居者対応をコールセンターに集約する、④滞納督促と更新手続きをシステム化する。オフィスのように1棟ごとに仕様書を作り直す発想ではなく、<b>横展開できる型をつくる</b>のが住宅の要諦です。',
+    (pm.n>=5?'外注委託費の対収入比: 中央値 <b>'+fmt(pm.m,1)+'%</b> / 上位25% <b>'+fmt(pm.p75,1)+'%</b>'+
+      '<span style="color:#5a5f68">(n='+pm.n+')</span>':'<span style="color:#c98c8c">この条件では算定できません</span>')+
+    '<br>1物件あたりの鑑定評価額は中央値 <b>'+jn(med(ALLV.filter(d=>d.ap).map(d=>d.ap)))+' 百万円</b>と小口で、管理オペレーションの効率が収益を左右します'],
+   ['AM / 環境認証','住宅の認証はBELS・CASBEEが中心。ZEBは事実上使えない',
+    '住宅の環境認証は保有率 <b>'+fmt(ALLV.filter(d=>d.cn).length/ALLV.length*100,0)+'%</b>。内訳を見るとCASBEEとDBJが中心で、<b>ZEB認証の取得は0件</b>です。ZEBはオフィス等の非住宅を対象とする制度で、住宅にはZEH（ゼッチ）という別の枠組みが用意されているためです。<br>実務的には、新築時にBELS★を取得しておくこと、既存物件ではCASBEE不動産評価認証の後付け取得が現実的な選択肢になります。断熱改修や高効率給湯器への更新は、入居者の光熱費を下げて競争力を高めますが、<b>オーナーの収支には直接効きにくい</b>点に注意が必要です。',
+    '認証保有率 <b>'+fmt(ALLV.filter(d=>d.cn).length/ALLV.length*100,0)+'%</b>'+
+    '<span style="color:#5a5f68">（ZEB 0件・BELS '+ALLV.filter(d=>d.bels).length+'件・DBJ '+ALLV.filter(d=>d.dbj).length+'件・CASBEE '+ALLV.filter(d=>d.casn).length+'件）</span>'+
+    '<br>粗利回り中央値: 認証あり <b>'+S(g(d=>d.cn>0))+'</b> ⇄ 認証なし <b>'+S(g(d=>!d.cn))+'</b>'+
+    '<br><span style="color:#c98c8c">認証の有無による利回り差は、立地と規模の違いを多く含みます</span>'+HB('confound')]
+  ] : [
    ['AM / 取得','利回りの土台は、買った時点でほぼ決まる',
     'どこに建っているか・築何年か・どれくらいの規模か。この3つで、市場がその物件に求める利回りの水準はほぼ決まります。都心の築浅ビルは価格が高いぶん利回りは低く、地方の築古ビルは利回りが高い。これは「地方の物件が優秀だから」ではなく、空室や修繕のリスクを引き受ける対価として高い利回りが求められているだけです。<br>つまり<b>利回りの大半は買った瞬間に確定し、運用でひっくり返すことはできません</b>。だからこそ、買った後にできるのは以下の5つで上積みすることだ、と割り切る必要があります。',
     lab+'の粗利回り中央値（鑑定評価額ベース）: 都心5区 <b>'+S(g(d=>d.a==='C5'))+'</b> ⇄ 地方・他3大都市圏 <b>'+S(g(d=>d.a==='RG'||d.a==='M3'))+'</b>'+
@@ -920,7 +960,7 @@ function drawRead(){const V=FY,lab=ST.use==='ALL'?'全用途':USE_L[ST.use];
 function drawHits(){const e=el('hits');if(!e)return;
   const fl=[['area',AREA_L],['corp',CORP_L],['age',null],['cert',null],['evl',null]]
     .filter(([k])=>ST[k]&&ST[k]!=='ALL').length;
-  e.textContent=USE_L[ST.scope]+' '+jn(F.length)+' 物件'+(fl?'（絞込'+fl+'条件）':'');}
+  e.textContent=USE_L[ST.scope]+' '+jn(F.length)+' 物件'+'';}
 
 /* 起動アニメーションを閉じる */
 function closeSplash(){const s=el('splash');if(!s||s.classList.contains('done'))return;

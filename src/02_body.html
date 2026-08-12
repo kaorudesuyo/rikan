@@ -11,7 +11,7 @@
     <div class="eyebrow">J-REIT 16 CORPORATIONS / 1,257 PROPERTIES</div>
     <div class="kanji">利瞰</div>
     <div class="sub">RIKAN — J-REIT YIELD ANATOMY</div>
-    <p class="desc">J-REITオフィス系16法人・1,257物件の開示データベースを、AM・PM・BM・建築の視点で解剖する分析アプリ。上部の検索・絞込は5つのタブすべてに同時に効きます。</p>
+    <p class="desc">J-REITオフィス系16法人・1,257物件の開示データベースを、AM・PM・BM・建築の視点で解剖する分析アプリ。上部で選ぶ<b>建物用途（オフィス／住宅）</b>は5つのタブすべてに同時に効きます。用途が違えば費用構造も稼働の意味も異なるため、比較は同一用途内で行います。</p>
     <div class="specwrap">
       <canvas id="spectrum" aria-label="賃料収入からNOIまでの分解"></canvas>
       <div class="speccap"><span id="specmid"></span></div>
@@ -163,7 +163,7 @@
   <div class="vtitle">
     <div class="eyebrow">PROPERTY FINDER</div>
     <h1 class="big">物件<span class="en">SEARCH &amp; COMPARE</span></h1>
-    <p class="lead">検索・絞込の結果を一覧で確認。<b style="color:#9ec49a">評価</b>バッジの物件は5軸評価の対象です。行をタップすると評価タブが開きます。</p>
+    <p class="lead">選択中の建物用途の物件を一覧で確認。<b style="color:#9ec49a">評価</b>バッジの物件は5軸評価の対象です。行をタップすると評価タブが開きます。</p>
   </div>
   <div class="legendrow">
     <span><span class="badge ev">評価</span> 5軸評価の対象<button class="hlp" data-h="badge" aria-label="評価バッジの説明">?</button></span>
@@ -195,7 +195,7 @@
   <div class="vtitle">
     <div class="eyebrow">PLAYBOOK</div>
     <h1 class="big">提言<span class="en">MOVES TO LIFT THE YIELD</span></h1>
-    <p class="lead">用語: AM<button class="hlp" data-h="am">?</button>　PM<button class="hlp" data-h="pm">?</button>　BM<button class="hlp" data-h="bm">?</button>　CAPEX<button class="hlp" data-h="capex">?</button>　フリーレント<button class="hlp" data-h="freerent">?</button><br>解剖から導かれる利回り向上の6手。<b>取得で決まる利回りを、運用で削らず、施策で上積みする</b>順序で並べ、根拠値は現在の絞込条件から再計算されます。</p>
+    <p class="lead">用語: AM<button class="hlp" data-h="am">?</button>　PM<button class="hlp" data-h="pm">?</button>　BM<button class="hlp" data-h="bm">?</button>　CAPEX<button class="hlp" data-h="capex">?</button>　フリーレント<button class="hlp" data-h="freerent">?</button><br>解剖から導かれる利回り向上の6手。<b>取得で決まる利回りを、運用で削らず、施策で上積みする</b>順序で並べています。<b>オフィスと住宅では費用の負担者も稼働の意味も異なるため、提言の内容そのものを用途別に分けています</b><button class="hlp" data-h="usediff">?</button></p>
   </div>
   <div class="playwrap plays" id="plays"></div>
 </section>
@@ -203,7 +203,7 @@
 <footer>
   <div class="mono" style="letter-spacing:.08em">利瞰 RIKAN — J-REIT YIELD ANATOMY</div>
   <div id="foot" style="margin-top:7px"></div>
-  <div style="margin-top:7px">出典: 各投資法人の決算短信・決算説明資料・有価証券報告書・ESG開示（2024年11月末〜2026年6月末時点、法人により異なる）。利回りは直近開示期の年換算値÷取得価格による簡便値で、鑑定NOI利回り・実勢キャップレートとは異なる。5軸評価は5軸すべてを算定できる199物件を母数とした相対評価。本アプリは情報提供目的であり投資勧誘ではない。</div>
+  <div style="margin-top:7px">出典: 各投資法人の決算短信・決算説明資料・有価証券報告書・ESG開示（2024年11月末〜2026年6月末時点、法人により異なる）。利回りは直近開示期の年換算値÷取得価格による簡便値で、鑑定NOI利回り・実勢キャップレートとは異なる。5軸評価は建物用途ごと（オフィス135物件・住宅39物件）を母数とした相対評価。本アプリは情報提供目的であり投資勧誘ではない。</div>
 </footer>
 </main>
 

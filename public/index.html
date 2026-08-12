@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-R8pPId4TLYjU9+IFMKOhWReh6ozifFJiPm47lE/0BL4=' 'sha256-jLlkt5Z9k9Ppl+J6xQ+00dYbi0IfKRcbRfGxOXMF9Vc=' 'sha256-cnPhtOf6JD3W2R1KOilWn6e2nsyO6W3av1Cl5ackxTQ=' 'sha256-KResWTF3fR7XpsxvXKmStpTNuoDe14zSiw12uBY6anU='; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; manifest-src 'self' data:; form-action 'none'; frame-ancestors 'none'; base-uri 'none'; object-src 'none'; worker-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-R8pPId4TLYjU9+IFMKOhWReh6ozifFJiPm47lE/0BL4=' 'sha256-jLlkt5Z9k9Ppl+J6xQ+00dYbi0IfKRcbRfGxOXMF9Vc=' 'sha256-54jdLuE3jVWzvUc1yOaDCX6CUeyqIf9woXZju3aq5C8=' 'sha256-rVD4ClTV8uEzRnvIWyWiEe81JUT/RVNv1uTwJw9X74c='; style-src 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none'; manifest-src 'self' data:; form-action 'none'; frame-ancestors 'none'; base-uri 'none'; object-src 'none'; worker-src 'none'; upgrade-insecure-requests">
 
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0a0a0a">
@@ -409,7 +409,7 @@ footer{padding:26px 12px 34px;color:var(--dim);font-size:10.5px;line-height:1.8;
     <div class="eyebrow">J-REIT 16 CORPORATIONS / 1,257 PROPERTIES</div>
     <div class="kanji">利瞰</div>
     <div class="sub">RIKAN — J-REIT YIELD ANATOMY</div>
-    <p class="desc">J-REITオフィス系16法人・1,257物件の開示データベースを、AM・PM・BM・建築の視点で解剖する分析アプリ。上部の検索・絞込は5つのタブすべてに同時に効きます。</p>
+    <p class="desc">J-REITオフィス系16法人・1,257物件の開示データベースを、AM・PM・BM・建築の視点で解剖する分析アプリ。上部で選ぶ<b>建物用途（オフィス／住宅）</b>は5つのタブすべてに同時に効きます。用途が違えば費用構造も稼働の意味も異なるため、比較は同一用途内で行います。</p>
     <div class="specwrap">
       <canvas id="spectrum" aria-label="賃料収入からNOIまでの分解"></canvas>
       <div class="speccap"><span id="specmid"></span></div>
@@ -561,7 +561,7 @@ footer{padding:26px 12px 34px;color:var(--dim);font-size:10.5px;line-height:1.8;
   <div class="vtitle">
     <div class="eyebrow">PROPERTY FINDER</div>
     <h1 class="big">物件<span class="en">SEARCH &amp; COMPARE</span></h1>
-    <p class="lead">検索・絞込の結果を一覧で確認。<b style="color:#9ec49a">評価</b>バッジの物件は5軸評価の対象です。行をタップすると評価タブが開きます。</p>
+    <p class="lead">選択中の建物用途の物件を一覧で確認。<b style="color:#9ec49a">評価</b>バッジの物件は5軸評価の対象です。行をタップすると評価タブが開きます。</p>
   </div>
   <div class="legendrow">
     <span><span class="badge ev">評価</span> 5軸評価の対象<button class="hlp" data-h="badge" aria-label="評価バッジの説明">?</button></span>
@@ -593,7 +593,7 @@ footer{padding:26px 12px 34px;color:var(--dim);font-size:10.5px;line-height:1.8;
   <div class="vtitle">
     <div class="eyebrow">PLAYBOOK</div>
     <h1 class="big">提言<span class="en">MOVES TO LIFT THE YIELD</span></h1>
-    <p class="lead">用語: AM<button class="hlp" data-h="am">?</button>　PM<button class="hlp" data-h="pm">?</button>　BM<button class="hlp" data-h="bm">?</button>　CAPEX<button class="hlp" data-h="capex">?</button>　フリーレント<button class="hlp" data-h="freerent">?</button><br>解剖から導かれる利回り向上の6手。<b>取得で決まる利回りを、運用で削らず、施策で上積みする</b>順序で並べ、根拠値は現在の絞込条件から再計算されます。</p>
+    <p class="lead">用語: AM<button class="hlp" data-h="am">?</button>　PM<button class="hlp" data-h="pm">?</button>　BM<button class="hlp" data-h="bm">?</button>　CAPEX<button class="hlp" data-h="capex">?</button>　フリーレント<button class="hlp" data-h="freerent">?</button><br>解剖から導かれる利回り向上の6手。<b>取得で決まる利回りを、運用で削らず、施策で上積みする</b>順序で並べています。<b>オフィスと住宅では費用の負担者も稼働の意味も異なるため、提言の内容そのものを用途別に分けています</b><button class="hlp" data-h="usediff">?</button></p>
   </div>
   <div class="playwrap plays" id="plays"></div>
 </section>
@@ -601,7 +601,7 @@ footer{padding:26px 12px 34px;color:var(--dim);font-size:10.5px;line-height:1.8;
 <footer>
   <div class="mono" style="letter-spacing:.08em">利瞰 RIKAN — J-REIT YIELD ANATOMY</div>
   <div id="foot" style="margin-top:7px"></div>
-  <div style="margin-top:7px">出典: 各投資法人の決算短信・決算説明資料・有価証券報告書・ESG開示（2024年11月末〜2026年6月末時点、法人により異なる）。利回りは直近開示期の年換算値÷取得価格による簡便値で、鑑定NOI利回り・実勢キャップレートとは異なる。5軸評価は5軸すべてを算定できる199物件を母数とした相対評価。本アプリは情報提供目的であり投資勧誘ではない。</div>
+  <div style="margin-top:7px">出典: 各投資法人の決算短信・決算説明資料・有価証券報告書・ESG開示（2024年11月末〜2026年6月末時点、法人により異なる）。利回りは直近開示期の年換算値÷取得価格による簡便値で、鑑定NOI利回り・実勢キャップレートとは異なる。5軸評価は建物用途ごと（オフィス135物件・住宅39物件）を母数とした相対評価。本アプリは情報提供目的であり投資勧誘ではない。</div>
 </footer>
 </main>
 
@@ -1109,10 +1109,10 @@ badge:{c:'VALUATION',t:'「評価」バッジとは',
  d:['<b>5軸評価の対象になっている物件</b>であることを示すバッジです。評価の良し悪しを表すものではありません。',
     '評価には物件別の①賃貸事業収入②賃貸事業費用の内訳③NOI④期末稼働率⑤期末鑑定評価額のすべてが必要です。J-REITは物件別収支の開示方針が法人ごとに異なり、テナントの同意が得られない物件は非開示となります。結果として、費用内訳まで開示している<b>JRE・MHR・HLC・NUD・MTRの199物件</b>だけが同じ土俵で採点できます。',
     'バッジのない物件は「評価が低い」のではなく「同一基準で採点する材料が開示されていない」という意味です。'],
- cav:'絞込の「環境認証」プルダウンで「5軸評価の対象」を選ぶと、この199物件だけを一覧できます。'},
+ cav:'物件タブの一覧では、5軸評価の対象物件に「評価」バッジが付きます。'},
 fiveaxis:{c:'VALUATION',t:'5軸評価の考え方',
  f:'総合偏差値 ＝ 5軸の偏差値の平均を、母集団内で再度偏差値化したもの',
- d:['評価対象199物件を母数として、各軸を<b>偏差値</b>（平均50・標準偏差10）で表します。60なら上位約16%、40なら下位約16%です。',
+ d:['上部で選んだ建物用途の評価対象（オフィス135物件・住宅39物件）を母数として、各軸を<b>偏差値</b>（平均50・標準偏差10）で表します。60なら上位約16%、40なら下位約16%です。',
 
     '<b>収益性 × 費用効率 ＝ NOI利回り</b> という分解関係になっており、トップラインとコストのどちらで差がついたのかが切り分けられます。',
     '5軸は<b>①収益性（いくら稼ぐか）②規模・流動性（資産としての強さ）③費用効率（いくら漏らさないか）④資産価値（市場の評価）⑤環境・省エネ性能（第三者認証と実測の省エネ実績）</b>で構成されます。'],
@@ -1150,15 +1150,15 @@ pctile:{c:'VALUATION',t:'偏差値（平均50・標準偏差10）',
  d:['各軸の評価は<b>偏差値</b>で表しています。母集団の平均が50、標準偏差が10になるよう変換したもので、学力偏差値と同じ考え方です。60なら上位約16%、40なら下位約16%にあたります。',
     '算出には<b>正規スコア法</b>を用いています。平均と標準偏差から直接計算する方法だと、NOIマージンが−207%といった極端な物件に引きずられ、他の物件が中央に潰れてしまいます。そこで順位を正規分布に写像することで、外れ値の影響を受けずに順序を保った偏差値にしています。',
     '<b>総合偏差値</b>は、5軸の偏差値を平均したうえで、その平均値をもう一度母集団内で偏差値化したものです。5つの指標を平均すると中心極限効果で値が中央に集まり（実測36.8〜58.5）差が読み取れなくなるため、この再変換を行っています。実測レンジは軸別・総合とも22〜78です。'],
- cav:'偏差値は母集団内での相対位置であり、絶対的な良し悪しではありません。採点母集団を「同用途内」に切り替えると同じ物件でも偏差値が変わります。'},
+ cav:'偏差値は母集団内での相対位置であり、絶対的な良し悪しではありません。母集団は上部で選んだ建物用途（オフィスまたは住宅）の評価対象物件です。'},
 diff:{c:'VALUATION',t:'差分（±pt）',
  d:['選択した物件の偏差値から、基準線（グループ平均）の偏差値を引いた値。プラスならその軸でグループ平均を上回っています。',
-    'プルダウンで投資法人や用途を絞ると比較の基準線が切り替わるため、「同じ法人の中で」「同じ用途の中で」どうかという読み替えができます。']},
+    '基準線は常にその用途の平均像（各軸50）です。投資法人の選択は物件を探すための絞込であり、基準線は変わりません。「同じ用途の中で」どうかという読み替えができます。']},
 pool:{c:'VALUATION',t:'評価母集団（199物件）',
  d:['5軸すべてを算定できる<b>199物件</b>です。物件別に費用内訳・NOI・期末鑑定評価額・期末帳簿価額が開示され、かつ期を通じて保有していた物件に限られます（期中に取得・譲渡した物件は年換算が歪むため除外）。',
     '構成は<b>JRE 75／NUD 52／HLC 44／MTR 18／MHR 10</b>の5法人、用途は<b>オフィス135・住宅39・商業11・ホテル8・ヘルスケア1・その他5</b>です。',
     'コア型の大型オフィスに偏っており、全1,257物件の縮図ではありません。物件別収支の開示方針は法人ごとに異なり、非開示には理由（テナントの同意が得られない等）があるため、欠測は無作為ではない点も踏まえて解釈してください。'],
- cav:'偏差値は常にこの199物件を母数として計算します。採点母集団を「同用途内」に切り替えた場合のみ、その用途の物件数が母数になります（オフィス135物件・住宅39物件。他の用途はn<15のため全体を使用）。'},
+ cav:'偏差値は上部で選んだ建物用途の母集団で計算します（オフィス135物件・住宅39物件）。オフィスと住宅では費用構造も稼働の意味も異なるため、用途をまたいだ偏差値は算定しません。'},
 ceiling:{c:'VALUATION',t:'稼働率を評価軸から外した理由',
  d:['J-REITの稼働率は高位で推移し、評価対象199物件のうち<b>136物件（69%）が稼働率100%</b>です。この136物件はすべて同じ偏差値になり、値の種類も46通りしかありませんでした。',
     'つまり稼働率は「優れているか」ではなく「満室を割っているかどうか」の二値に近い情報しか持たず、5軸のうち1つを占めるだけの判別力がありませんでした。また同順位が多いことで軸の平均偏差値が50から乖離する（実測49.2）という副作用もありました。',
@@ -1173,7 +1173,7 @@ grade:{c:'VALUATION',t:'グレード（AAA〜C）の決め方',
  d:['当初は「90点以上でAAA」のような絶対値の閾値でグレードを付けていましたが、監査の結果<b>構造的な欠陥</b>が判明したため変更しました。',
     '総合点は5軸の平均です。5つの指標を平均すると中心極限効果で値が中央に集まるため、絶対値の閾値では上位グレードが永久に空席になっていました。',
     '現在は<b>母集団内の相対順位から直接</b>グレードを決めています。AAA＝上位5%、AA＝上位15%、A＝上位30%、BBB＝上位50%、BB＝上位70%、B＝上位85%、C＝下位15%です。偏差値を閾値と比較する方式では、同じ偏差値の物件が境界をまたいで別グレードになり順位表示と食い違うため、順位を直接の基準にしています。'],
- cav:'グレードは母集団199物件の中での相対評価です。採点母集団を「同用途内」に切り替えると、同じ物件でもグレードが変わります。'},
+ cav:'グレードは同じ建物用途の母集団の中での相対評価です（オフィス135物件・住宅39物件）。用途が変われば同じ物件でもグレードは変わります。'},
 vpool:{c:'VALUATION',t:'採点の母集団を切り替える',
  d:['<b>採点母集団を切り替えると、偏差値・基準線（青い破線）・順位・グレードのすべてが同じ母集団で再計算されます。</b>物件の偏差値だけを同用途で測り、基準線は全体のままにすると、差分（pt）が別々の物差しの引き算になってしまうためです。',
     '評価対象199物件は<b>オフィス134件（68%）・住宅39件・商業11件・ホテル8件</b>と用途が偏っています。この全体を分母に採点すると、住宅やホテルの物件はオフィスの物差しで測られることになります。',
@@ -1269,6 +1269,13 @@ pmstruct:{c:'MANAGE',t:'委託構造の読み方',
     '系列内製型は運営品質の統制がしやすくグループ全体での知見蓄積に有利な一方、委託費が市場競争にさらされにくい面があります。分散委託型はその逆で、相見積もりによる価格競争が働きやすくなります。',
     '本アプリの提言「委託費は束を解いて組み直す」は、この構造を踏まえた打ち手です。'],
  cav:'委託構造と運営成績（光熱費・修繕費）の関係を検証するには、PM会社が判明した物件と費用内訳を開示する物件が重なる必要があります。データ取込後にこの重複件数を確認し、比較可能かどうかを判定します。'},
+usediff:{c:'METHOD',t:'オフィスと住宅で分析を分ける理由',
+ d:['両者は<b>費用の負担者も、稼働の意味も、コストの発生パターンも異なります</b>。同じ枠組みで数値だけ差し替えると、実務上ミスリードになるため、提言の内容そのものを用途別に分けています。',
+    '<b>①水道光熱費の負担者</b>: 住宅は開示分の64%が「計上なし」（各戸が入居者と直接契約）。オフィスは9%です。住宅で対収入比が低いのは省エネだからではなく、負担者が違うためで、オーナーが削れるのは共用部に限られます。',
+    '<b>②稼働の意味</b>: 満室の物件はオフィス73%に対し住宅24%。住宅は入退去が常態で、目標は「空室をなくす」ことではなく空室期間を縮めることになります。',
+    '<b>③コストの中心</b>: 修繕費の対収入比は住宅7.0%・オフィス2.5%と2.8倍の差。住宅は退去のたびの原状回復が積み上がる構造で、大規模修繕とは管理の方法が根本的に違います。',
+    '<b>④環境認証</b>: ZEB認証は非住宅を対象とする制度のため、住宅の取得は0件。住宅ではBELS・CASBEEが中心になります。'],
+ cav:'そのため提言の6手は、オフィスでは「省エネ・修繕計画」、住宅では「原状回復・光熱費の負担構造」と、内容そのものを差し替えています。'},
 /* --- データ --- */
 method:{c:'METHOD',t:'分析手法の全体像と既知の限界',
  d:['本アプリの分析手法と、その限界を明示します。<b>1. 標本</b>: 開示された物件のみを扱う観察データです。物件別収支の開示方針は法人により異なり、非開示には理由（テナントの同意が得られない等）があります。欠測は無作為ではなく、母集団は市場の縮図ではありません。',
@@ -1768,7 +1775,7 @@ function baseVerdict(base,bs,medAll){
       '規模・流動性は運用では動かせない、資産そのものの性格を示します。';
     const p3='<b>環境・省エネ性能は認証と実測エネルギー効率の合成です。</b>両者の順位相関はρ=−0.012とほぼ無関係で、'+
       '認証を持っていても光熱費が重い物件、認証はないが効率の良い物件がそれぞれ存在します。どちらが弱いかで打ち手が変わります。';
-    const p4='上のプルダウンで投資法人・用途を絞り込み、物件を選ぶと、その物件の五角形が金色で重なり、軸ごとの差分（pt）と個別の総評が表示されます。';
+    const p4='上のプルダウンで投資法人を選ぶと物件を絞り込めます。物件を選ぶと、その物件の五角形が金色で重なり、軸ごとの差分（pt）と個別の総評が表示されます。';
     return '<p>'+p1+'</p><p>'+p2+'</p><p>'+p3+'</p><p>'+p4+'</p>'}
   const diff=x=>((x.p-50>=0?'+':'')+(x.p-50).toFixed(0));
   const p1=groupLabel()+'に該当する'+base.length+'物件の平均像です。評価対象全体（各軸50）に対し、'+
@@ -1859,7 +1866,7 @@ function drawSpectrum(){
 function drawKPI(){const cert=F.filter(d=>d.cn>0).length;
   const exc=F.filter(d=>d.pt).length, noy=F.filter(d=>d.yra==null&&!d.pt).length;
   const apAll=F.filter(d=>d.ap).reduce((s,d)=>s+d.ap,0), apC=F.filter(d=>d.cn&&d.ap).reduce((s,d)=>s+d.ap,0);
-  const it=[[jn(F.length),'物件','絞込後の対象物件数（期中譲渡'+(D.length-BASE.length)+'件を除く）'+HB('universe')],
+  const it=[[jn(F.length),'物件','対象物件数（期中譲渡'+(D.length-BASE.length)+'件を除く）'+HB('universe')],
     [fmt(med(FY.map(d=>d.yra))),'%','粗利回り中央値・鑑定ベース（n='+FY.length+'／収入非開示'+noy+'件・期中取得'+exc+'件を除く）'+HB('base')],
     [fmt(med(F.filter(d=>d.yna!=null).map(d=>d.yna))),'%','NOI利回り中央値・鑑定ベース（n='+F.filter(d=>d.yna!=null).length+'）'+HB('yn')],
     [F.length?Math.round(cert/F.length*100):0,'%','環境認証の保有率・物件数ベース（'+cert+'物件／評価額ベースなら'+
@@ -1931,7 +1938,7 @@ function drawCross(){
   const e=el('crossNote');
   if(e){const nx=F.filter(d=>xf(d)!=null).length, ny=F.filter(d=>yf(d)!=null).length;
     const corps=[...new Set(v.map(d=>d.l))];
-    e.innerHTML='対象 <b>'+v.length+'物件</b>（絞込後'+F.length+'物件のうち、横軸「'+esc(MX[0])+'」を算定できるのが '+nx+
+    e.innerHTML='対象 <b>'+v.length+'物件</b>（'+USE_L[ST.scope]+'全'+F.length+'物件のうち、横軸「'+esc(MX[0])+'」を算定できるのが '+nx+
       '件、縦軸「'+esc(MY[0])+'」が '+ny+'件、両方揃うのが '+v.length+'件）／'+corps.length+'法人'+
       (ST.x==='age'?'<br><span style="color:#c98c8c">築年数は竣工年月を開示する9法人のみが対象です。NBF・JRE・KDX・ICG・NUD・HFRは横軸を算定できず、この図から除外されています</span>'+HB('agebias'):'')+
       (['yna','mgn'].indexOf(ST.y)>=0||['yna','mgn'].indexOf(ST.x)>=0?'<br><span style="color:#c98c8c">NOI関連の指標は費用内訳を開示する5法人のみが対象です</span>':'')+
@@ -2204,7 +2211,7 @@ function drawList(){const rows=sorted(),c=el('plist');
 el('more').onclick=()=>{ST.page++;drawList()};
 
 /* ---- playbook / reading / hits ---- */
-function drawPlays(){const V=FY,O2=FO,lab=ST.use==='ALL'?'全用途':USE_L[ST.use];
+function drawPlays(){const V=FY,O2=FO,ALLV=F,lab=USE_L[ST.scope];
   /* 根拠値は絞込条件から再計算する。0%（計上なし）は費用が軽いのではなく
      テナント直接負担等による非計上なので、費用の分位計算からは除外する。 */
   const cst=k=>{const a=O2.filter(d=>d[k]!=null&&d[k]>0).map(d=>d[k]);
@@ -2220,7 +2227,47 @@ function drawPlays(){const V=FY,O2=FO,lab=ST.use==='ALL'?'全用途':USE_L[ST.us
   const occStrat=stratDiff(V.filter(d=>d.occ!=null),d=>d.yra,d=>d.occ>=99);
   const certStrat=stratDiff(V,d=>d.yra,d=>!!d.cn);
   const ageN=V.filter(d=>d.age!=null).length;
-  const P=[
+  /* 提言はオフィスと住宅で内容そのものを分ける。
+     実測すると構造が大きく異なるため（住宅は水道光熱費の64%がテナント直接負担で
+     オーナー側の削減余地が小さく、修繕費は原状回復が定常発生して中央値7.0%とオフィスの2.8倍、
+     稼働率は満室が24%にとどまりリーシングが常時発生する）、
+     同じ打ち手を数値だけ変えて示すのは実務上ミスリードになる。 */
+  const RS=ST.scope==='RS';
+  const P = RS ? [
+   ['AM / 取得','住宅の利回りは「立地の実需」でほぼ決まる',
+    '住宅は事業用と違い、賃料が景気ではなく<b>その街に住みたい人がどれだけいるか</b>で決まります。単身向けなら駅からの距離と沿線の勤務地アクセス、ファミリー向けなら学区と生活利便。この実需の厚みが、そのまま長期の稼働と賃料水準を規定します。<br>オフィスのように大型化で有利になる構造は薄く、むしろ<b>1棟あたりが小さく数を持つ</b>ことでリスクを分散するのが住宅の定石です。',
+    lab+'の粗利回り中央値（鑑定評価額ベース）: 都心5区 <b>'+S(g(d=>d.a==='C5'))+'</b> ⇄ 地方・他3大都市圏 <b>'+S(g(d=>d.a==='RG'||d.a==='M3'))+'</b>'+
+    '<br>1物件あたりの鑑定評価額 中央値 <b>'+jn(med(ALLV.filter(d=>d.ap).map(d=>d.ap)))+' 百万円</b>'+
+    '<span style="color:#5a5f68">（オフィスの中央値は5,905百万円）</span>'],
+   ['PM / リーシング','住宅は「空室が出ること」を前提に、空室期間を縮める',
+    '住宅の稼働率は満室が<b>全体の24%</b>にとどまります（オフィスは73%）。入退去が常態である以上、目標は「空室をなくす」ことではなく<b>空室期間（ダウンタイム）を1日でも短くする</b>ことです。<br>退去予告から募集開始までの日数、原状回復工事の着手までの待ち時間、内見から申込までの導線。この3つを詰めるのが実務の中心で、賃料を下げる前にまず着手すべき領域です。仲介会社への広告料（AD）の出し方も、季節や競合状況に応じて機動的に変えます。',
+    '稼働率の分布: 中央値 <b>'+fmt(med(ALLV.filter(d=>d.occ!=null).map(d=>d.occ)),1)+'%</b>／下位10% <b>'+
+    fmt(q(ALLV.filter(d=>d.occ!=null).map(d=>d.occ),.1),1)+'%</b>'+
+    '<span style="color:#5a5f68">（満室の物件は'+fmt(ALLV.filter(d=>d.occ===100).length/ALLV.filter(d=>d.occ!=null).length*100,0)+'%）</span>'+
+    '<br><span style="color:#5a5f68">オフィスは満室73%・下位10%でも94.8%。住宅は空室が常時発生する前提で運営設計する必要があります</span>'],
+   ['BM / 原状回復','住宅のコスト勝負は原状回復。単価と工期を管理できるかで差がつく',
+    '住宅の修繕費は対収入比の中央値が <b>7.0%</b> と、オフィス（2.5%）の約2.8倍です。しかも上位10%は75%に達し、<b>ばらつきが極端に大きい</b>のが特徴です。これは大規模修繕ではなく、退去のたびに発生する<b>原状回復工事</b>が積み上がるためです。<br>打ち手は、①クロス・床材の仕様を標準化して単価を固定する、②複数物件をまとめて施工会社と年間契約する、③通常損耗と故意過失の負担区分を契約と精算で明確にする、④工期を短縮して次の募集開始を早める。工期短縮は費用と稼働の両方に効きます。',
+    '修繕費の対収入比: 中央値 <b>'+fmt(med(O2.filter(d=>d.rp>0).map(d=>d.rp)),1)+'%</b>／上位10% <b>'+
+    fmt(q(O2.filter(d=>d.rp>0).map(d=>d.rp),.9),1)+'%</b>'+
+    '<span style="color:#5a5f68">(n='+O2.filter(d=>d.rp>0).length+')</span>'+
+    '<br><span style="color:#c98c8c">ばらつきの大きさは、退去のタイミングと原状回復の単価管理の巧拙をそのまま映しています</span>'],
+   ['BM / 光熱費','住宅の水道光熱費は入居者負担が中心。オーナー側の削減余地は共用部に限られる',
+    '住宅では水道光熱費を計上していない物件が <b>開示分の64%</b> を占めます（オフィスは9%）。各戸の電気・ガス・水道は入居者が直接契約するのが一般的だからです。<br>したがってオーナーが削れるのは<b>共用部の照明・エレベーター・給水ポンプ・宅配ボックス</b>などに限られます。金額規模は小さいものの、LED化と人感センサー、ポンプのインバータ化は投資回収年数が読みやすく、実行しやすい施策です。オフィスのような熱源制御や外気冷房といった大がかりな話にはなりません。',
+    '水道光熱費の対収入比: 中央値 <b>'+(ut.n>=5?fmt(ut.m,1)+'%':'—')+'</b>'+
+    '<span style="color:#5a5f68">(計上あり n='+ut.n+'／計上なし '+ut.zero+'件)</span>'+
+    '<br><span style="color:#5a5f68">オフィスの中央値は6.9%。住宅で対収入比が低いのは省エネだからではなく、費用の負担者が違うためです</span>'],
+   ['PM × BM / 委託契約','戸数が多いほど、管理の標準化が効く',
+    '住宅は1棟あたりが小さく戸数が多いため、物件ごとに個別対応していると管理コストが膨らみます。逆に言えば、<b>業務を標準化して量をまとめるほど単価が下がる</b>構造です。<br>①募集条件・原状回復仕様・退去精算のルールを統一する、②近隣物件をまとめて1社に委託して巡回効率を上げる、③入居者対応をコールセンターに集約する、④滞納督促と更新手続きをシステム化する。オフィスのように1棟ごとに仕様書を作り直す発想ではなく、<b>横展開できる型をつくる</b>のが住宅の要諦です。',
+    (pm.n>=5?'外注委託費の対収入比: 中央値 <b>'+fmt(pm.m,1)+'%</b> / 上位25% <b>'+fmt(pm.p75,1)+'%</b>'+
+      '<span style="color:#5a5f68">(n='+pm.n+')</span>':'<span style="color:#c98c8c">この条件では算定できません</span>')+
+    '<br>1物件あたりの鑑定評価額は中央値 <b>'+jn(med(ALLV.filter(d=>d.ap).map(d=>d.ap)))+' 百万円</b>と小口で、管理オペレーションの効率が収益を左右します'],
+   ['AM / 環境認証','住宅の認証はBELS・CASBEEが中心。ZEBは事実上使えない',
+    '住宅の環境認証は保有率 <b>'+fmt(ALLV.filter(d=>d.cn).length/ALLV.length*100,0)+'%</b>。内訳を見るとCASBEEとDBJが中心で、<b>ZEB認証の取得は0件</b>です。ZEBはオフィス等の非住宅を対象とする制度で、住宅にはZEH（ゼッチ）という別の枠組みが用意されているためです。<br>実務的には、新築時にBELS★を取得しておくこと、既存物件ではCASBEE不動産評価認証の後付け取得が現実的な選択肢になります。断熱改修や高効率給湯器への更新は、入居者の光熱費を下げて競争力を高めますが、<b>オーナーの収支には直接効きにくい</b>点に注意が必要です。',
+    '認証保有率 <b>'+fmt(ALLV.filter(d=>d.cn).length/ALLV.length*100,0)+'%</b>'+
+    '<span style="color:#5a5f68">（ZEB 0件・BELS '+ALLV.filter(d=>d.bels).length+'件・DBJ '+ALLV.filter(d=>d.dbj).length+'件・CASBEE '+ALLV.filter(d=>d.casn).length+'件）</span>'+
+    '<br>粗利回り中央値: 認証あり <b>'+S(g(d=>d.cn>0))+'</b> ⇄ 認証なし <b>'+S(g(d=>!d.cn))+'</b>'+
+    '<br><span style="color:#c98c8c">認証の有無による利回り差は、立地と規模の違いを多く含みます</span>'+HB('confound')]
+  ] : [
    ['AM / 取得','利回りの土台は、買った時点でほぼ決まる',
     'どこに建っているか・築何年か・どれくらいの規模か。この3つで、市場がその物件に求める利回りの水準はほぼ決まります。都心の築浅ビルは価格が高いぶん利回りは低く、地方の築古ビルは利回りが高い。これは「地方の物件が優秀だから」ではなく、空室や修繕のリスクを引き受ける対価として高い利回りが求められているだけです。<br>つまり<b>利回りの大半は買った瞬間に確定し、運用でひっくり返すことはできません</b>。だからこそ、買った後にできるのは以下の5つで上積みすることだ、と割り切る必要があります。',
     lab+'の粗利回り中央値（鑑定評価額ベース）: 都心5区 <b>'+S(g(d=>d.a==='C5'))+'</b> ⇄ 地方・他3大都市圏 <b>'+S(g(d=>d.a==='RG'||d.a==='M3'))+'</b>'+
@@ -2302,7 +2349,7 @@ function drawRead(){const V=FY,lab=ST.use==='ALL'?'全用途':USE_L[ST.use];
 function drawHits(){const e=el('hits');if(!e)return;
   const fl=[['area',AREA_L],['corp',CORP_L],['age',null],['cert',null],['evl',null]]
     .filter(([k])=>ST[k]&&ST[k]!=='ALL').length;
-  e.textContent=USE_L[ST.scope]+' '+jn(F.length)+' 物件'+(fl?'（絞込'+fl+'条件）':'');}
+  e.textContent=USE_L[ST.scope]+' '+jn(F.length)+' 物件'+'';}
 
 /* 起動アニメーションを閉じる */
 function closeSplash(){const s=el('splash');if(!s||s.classList.contains('done'))return;
