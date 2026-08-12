@@ -1,0 +1,24 @@
+name: build & verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install --no-audit --no-fund
+      - name: ビルド（CSPハッシュ再計算）
+        run: npm run build
+      - name: 生成物がコミット済みの内容と一致するか
+        run: |
+          git diff --exit-code -- public/ \
+            || (echo "::error::public/ が古いままです。npm run build を実行してコミットしてください" && exit 1)
+      - name: 自動テスト（機能・安定性・セキュリティ・正確性・整合性・レイアウト）
+        run: npm test
