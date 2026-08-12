@@ -1,0 +1,215 @@
+<div id="splash" role="status" aria-label="利瞰を起動しています">
+  <svg  viewBox="0 0 100 100" aria-hidden="true" focusable="false"><polygon points="50.00,10.00 88.04,37.64 73.51,82.36 26.49,82.36 11.96,37.64" fill="none" stroke="#c8a35f" stroke-opacity=".55" stroke-width="4"/><polygon points="50.00,28.00 70.92,43.20 62.93,67.80 37.07,67.80 29.08,43.20" fill="none" stroke="#c8a35f" stroke-opacity=".3" stroke-width="3"/><line x1="50" y1="50" x2="50.00" y2="10.00" stroke="#c8a35f" stroke-opacity=".28" stroke-width="2.4"/><line x1="50" y1="50" x2="88.04" y2="37.64" stroke="#c8a35f" stroke-opacity=".28" stroke-width="2.4"/><line x1="50" y1="50" x2="73.51" y2="82.36" stroke="#c8a35f" stroke-opacity=".28" stroke-width="2.4"/><line x1="50" y1="50" x2="26.49" y2="82.36" stroke="#c8a35f" stroke-opacity=".28" stroke-width="2.4"/><line x1="50" y1="50" x2="11.96" y2="37.64" stroke="#c8a35f" stroke-opacity=".28" stroke-width="2.4"/><polygon points="50.00,13.20 70.92,43.20 68.34,75.24 40.13,63.59 24.13,41.59" fill="#c8a35f" fill-opacity=".26" stroke="#c8a35f" stroke-width="6" stroke-linejoin="round"/></svg>
+  <div class="spname">利瞰</div>
+  <div class="spsub">RIKAN &middot; YIELD ANATOMY</div>
+</div>
+<main>
+
+<!-- ========== 01 概況 ========== -->
+<section class="view on" id="v-ov">
+  <div class="hero">
+    <div class="eyebrow">J-REIT 16 CORPORATIONS / 1,257 PROPERTIES</div>
+    <div class="kanji">利瞰</div>
+    <div class="sub">RIKAN — J-REIT YIELD ANATOMY</div>
+    <p class="desc">J-REITオフィス系16法人・1,257物件の開示データベースを、AM・PM・BM・建築の視点で解剖する分析アプリ。上部の検索・絞込は5つのタブすべてに同時に効きます。</p>
+    <div class="specwrap">
+      <canvas id="spectrum" aria-label="賃料収入からNOIまでの分解"></canvas>
+      <div class="speccap"><span id="specmid"></span></div>
+    </div>
+    <p class="note" id="heroNote"></p>
+  </div>
+  <div class="kpis" id="kpis"></div>
+  <p class="note">数値は各投資法人の開示に基づく実測値です。データの範囲と限界<button class="hlp" data-h="data">?</button>　利回りの定義<button class="hlp" data-h="base">?</button>　<b>分析手法と限界</b><button class="hlp" data-h="method">?</button></p>
+  <div class="gwrap grid2">
+    <div class="card">
+      <h3><span class="tag">CORPORATION MAP</span>投資法人ポジショニング<button class="hlp" data-h="bubble" aria-label="この図の説明">?</button></h3>
+      <div class="seglab">横軸</div><div class="seg" id="segCorpX"></div>
+      <div class="seglab">縦軸</div><div class="seg" id="segCorpY"></div>
+      <div class="cw tall"><canvas id="chCorp"></canvas></div>
+      <div class="lgnd2" id="corpLegend"></div>
+      <p class="note" style="margin-top:8px">色は投資法人ごとに固定で、アプリ全体で共通です<button class="hlp" data-h="colorrule">?</button></p>
+      <p class="note" id="corpNote"></p>
+      <p class="note">バブル＝各法人の中央値、大きさ＝期末鑑定評価額の合計。横軸・縦軸は切替でき、法人ごとの戦略の違いを座標として読み取れます<button class="hlp" data-h="bubble">?</button></p>
+    </div>
+    <div class="card">
+      <h3><span class="tag">DISTRIBUTION</span>グループ別 分布<button class="hlp" data-h="dist" aria-label="この図の説明">?</button></h3>
+      <div class="seglab">集計軸</div><div class="seg" id="segDistG"></div>
+      <div class="seglab">指標</div><div class="seg" id="segDistM"></div>
+      <div class="cw tall"><canvas id="chDist"></canvas></div>
+      <p class="note" id="distNote"></p>
+    </div>
+  </div>
+  <div class="card">
+    <h3><span class="tag">STRATEGY</span>投資法人の戦略プロファイル<button class="hlp" data-h="strategy">?</button></h3>
+    <div class="seglab">投資法人</div>
+    <div class="sel" style="margin-top:6px" id="wStrat"><label>投資法人</label><select id="selStrat" aria-label="戦略を見る投資法人"></select></div>
+    <div id="stratBody"></div>
+  </div>
+</section>
+
+<!-- ========== 02 分析 ========== -->
+<section class="view" id="v-an">
+  <div class="vtitle">
+    <div class="eyebrow">ANALYSIS</div>
+    <h1 class="big">分析<span class="en">DRIVERS · COST · GREEN</span></h1>
+  </div>
+  <div class="subtabs" id="subtabs">
+    <button data-p="drv" class="on">因子</button>
+    <button data-p="cost">費用</button>
+    <button data-p="grn">認証</button>
+    <button data-p="bm">PM会社</button>
+  </div>
+
+  <div class="pane on" id="p-drv">
+    <p class="lead">利回りを動かす因子を、軸を入れ替えながら剥がす。取得価格には立地・築年の期待が織り込まれるため、<b>高利回り＝優良ではなく、市場が要求したリスクプレミアム</b>として読むのがAMの作法。</p>
+    <div class="card">
+      <h3><span class="tag">CROSS PLOT</span>2軸クロス分析<button class="hlp" data-h="method">?</button><button class="hlp" data-h="cross" aria-label="この図の説明">?</button></h3>
+      <div class="seglab">横軸 X</div><div class="seg" id="segX"></div>
+      <div class="seglab">縦軸 Y</div><div class="seg" id="segY"></div>
+      <div class="seglab">表示</div><div class="seg" id="segMode"></div>
+      <div class="cw tall"><canvas id="chCross"></canvas></div>
+      <p class="note" id="crossNote"></p>
+      <p class="note">点＝1物件（色＝用途、金縁＝環境認証あり）。点をタップするとその物件の5軸評価が開きます。相関が見えても因果とは限りません<button class="hlp" data-h="cross">?</button></p>
+    </div>
+    <div class="card"><h3><span class="tag">READING</span>いま見えていること</h3>
+      <p class="note" id="driverRead" style="font-size:12.4px"></p></div>
+  </div>
+
+  <div class="pane" id="p-cost">
+    <p class="lead">NOI<button class="hlp" data-h="noi">?</button>は「稼ぐ」より「漏らさない」。外注委託費はPM<button class="hlp" data-h="pm">?</button>・BM<button class="hlp" data-h="bm">?</button>・清掃・警備・設備管理の束、修繕費はBMの実行品質、水道光熱費は建物仕様と運用チューニングの成績表。対象は費用内訳を開示する5法人。</p>
+    <div class="gwrap grid2">
+      <div class="card">
+        <h3><span class="tag">COST STACK</span>費用構成 — 対収入比率<button class="hlp" data-h="stack" aria-label="この図の説明">?</button></h3>
+        <div class="seglab">集計軸</div><div class="seg" id="segStackG"></div>
+        <div class="cw tall"><canvas id="chStack"></canvas></div>
+        <p class="note" id="stackNote"></p>
+        <p class="note">賃貸事業収入＝100とした費目構成です。<b>減価償却費を含む</b>ため、100から積み上げを引いた残りは「償却後の賃貸事業利益率」であり、NOIマージンとは異なります（NOIマージン＝残り＋減価償却費）<button class="hlp" data-h="stackbase">?</button></p>
+      </div>
+      <div class="card">
+        <h3><span class="tag">COST SPREAD</span>費目別のばらつき＝改善余地<button class="hlp" data-h="spread" aria-label="この図の説明">?</button></h3>
+        <div class="seglab">費目</div><div class="seg" id="segCostK"></div>
+        <div class="cw tall"><canvas id="chSpread"></canvas></div>
+        <p class="note" id="costHelp" style="margin-top:8px"></p>
+        <p class="note" id="spreadNote"></p>
+        <p class="note">上位分位から中央値へ寄せた分が、そのまま対収入比の改善余地になります。ただし修繕費は単年で大きく変動するため、複数期の推移で判断してください。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane" id="p-grn">
+    <p class="lead">環境認証848件（ZEB／DBJ／CASBEE／LEED）を物件に紐づけ、運用成績との関係を見る。認証は築浅・大型・都心に偏在するため<b>層を揃えて</b>読む。相関であって因果ではない。</p>
+    <div class="card">
+      <h3><span class="tag">CERTIFIED VS NOT</span>認証の有無で何が変わるか<button class="hlp" data-h="cert" aria-label="環境認証の説明">?</button></h3>
+      <div class="seglab">指標</div><div class="seg" id="segCertM"></div>
+      <div class="seglab">層別</div><div class="seg" id="segCertG"></div>
+      <div class="cw tall"><canvas id="chCert"></canvas></div>
+      <p class="note" id="certNote"></p>
+      <p class="note">認証制度の定義: ZEB・BELS<button class="hlp" data-h="zeb">?</button>　DBJ<button class="hlp" data-h="dbj">?</button>　CASBEE<button class="hlp" data-h="casbee">?</button>　LEED<button class="hlp" data-h="leed">?</button></p>
+    </div>
+    <div class="gwrap grid2">
+      <div class="card">
+        <h3><span class="tag">RANK LADDER</span>認証ランク別 中央値<button class="hlp" data-h="rank" aria-label="認証ランクの説明">?</button></h3>
+        <div class="seglab">認証種別</div><div class="seg" id="segRank"></div>
+        <div class="cw"><canvas id="chRank"></canvas></div>
+        <p class="note" id="rankNote"></p>
+        <p class="note">ランクが上がるほど利回りが低く見えますが、<b>上位ランクほど都心5区の比率が高い</b>ため、この差は認証ランクではなく立地を映している可能性があります<button class="hlp" data-h="confound">?</button></p>
+      </div>
+      <div class="card">
+        <h3><span class="tag">COVERAGE</span>認証はどこに集まっているか<button class="hlp" data-h="cov" aria-label="この図の説明">?</button></h3>
+        <div class="seglab">分母</div><div class="seg" id="segCovBase"></div>
+        <div class="seglab">集計軸</div><div class="seg" id="segCovG"></div>
+        <div class="cw"><canvas id="chCov"></canvas></div>
+        <p class="note" id="covNote"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pane" id="p-bm">
+    <p class="lead"><b>PM（プロパティマネジメント）会社</b>は、テナント募集・賃料改定・収支計画の策定・BM会社の選定と統括を担う受託者です<button class="hlp" data-h="pm">?</button>。各投資法人の<b>有価証券報告書</b>に記載されたPM会社を物件単位で収録し、投資法人ごとの委託構造を可視化します<button class="hlp" data-h="pmdata">?</button></p>
+    <p class="note" id="pmNote"></p>
+    <div class="gwrap grid2">
+      <div class="card">
+        <h3><span class="tag">COVERAGE</span>投資法人別のPM会社の判明率</h3>
+        <div class="cw tall"><canvas id="chPmCov"></canvas></div>
+        <p class="note">有価証券報告書にPM会社の記載がある物件の割合です。記載様式は法人により異なります。</p>
+      </div>
+      <div class="card">
+        <h3><span class="tag">PM COMPANIES</span>PM会社別の受託物件数</h3>
+        <div class="cw tall"><canvas id="chPmCo"></canvas></div>
+        <p class="note">上位14社まで表示します。スポンサー系列への集中度と、独立系PM会社の存在感が読み取れます。</p>
+      </div>
+    </div>
+    <div class="card">
+      <h3><span class="tag">SPONSOR</span>スポンサー系PM会社への委託比率<button class="hlp" data-h="pmspon">?</button></h3>
+      <div class="cw tall"><canvas id="chPmSpon"></canvas></div>
+      <p class="note" id="pmSponNote"></p>
+      <div id="pmDrill"></div>
+    </div>
+    <div class="card">
+      <h3><span class="tag">OPERATION</span>PM会社別の水道光熱費の原単位<button class="hlp" data-h="pmperf">?</button></h3>
+      <div class="cw tall"><canvas id="chPmPerf"></canvas></div>
+      <p class="note" id="pmPerfNote"></p>
+    </div>
+    <div class="card">
+      <h3><span class="tag">STRUCTURE</span>投資法人別の委託構造</h3>
+      <div id="pmTable"></div>
+      <p class="note">1つの投資法人が複数のPM会社に委託するのが一般的です。社数が多いほど分散委託、少ないほど系列集中を示します<button class="hlp" data-h="pmstruct">?</button></p>
+    </div>
+  </div>
+  </section>
+
+<!-- ========== 03 物件 ========== -->
+<section class="view" id="v-pr">
+  <div class="vtitle">
+    <div class="eyebrow">PROPERTY FINDER</div>
+    <h1 class="big">物件<span class="en">SEARCH &amp; COMPARE</span></h1>
+    <p class="lead">検索・絞込の結果を一覧で確認。<b style="color:#9ec49a">評価</b>バッジの物件は5軸評価の対象です。行をタップすると評価タブが開きます。</p>
+  </div>
+  <div class="legendrow">
+    <span><span class="badge ev">評価</span> 5軸評価の対象<button class="hlp" data-h="badge" aria-label="評価バッジの説明">?</button></span>
+    <span><span class="badge">ZDC</span> 環境認証あり<button class="hlp" data-h="certbadge" aria-label="認証バッジの説明">?</button></span>
+  </div>
+  <div class="seglab">並び替え</div>
+  <div class="seg" id="segSort"></div>
+  <div class="plist" id="plist"></div>
+  <button class="more" id="more">さらに表示</button>
+</section>
+
+<!-- ========== 04 評価 ========== -->
+<section class="view" id="v-va">
+  <div class="vtitle">
+    <div class="eyebrow">PROPERTY VALUATION</div>
+    <h1 class="big">物件評価<button class="hlp big" data-h="fiveaxis" aria-label="5軸評価の説明">?</button><span class="en">FIVE-AXIS ASSESSMENT</span></h1>
+    <p class="lead"><b>収益性・規模流動性・費用効率・資産価値・環境省エネ</b>の5軸を偏差値で評価します。評価対象は物件収支に十分な情報がある<b>199物件</b>（費用内訳まで開示するJRE・MHR・HLC・NUD・MTR）。初期表示は<b>評価対象全体の平均像</b>で、投資法人・用途で絞り込んで物件を選ぶと、その物件を重ねて差分を表示します。</p>
+  <div class="vpick">
+    <div class="sel" id="wVCorp"><label>投資法人を選ぶ</label><select id="vCorp" aria-label="評価する物件の投資法人"></select></div>
+    <div class="sel full" id="wVSel"><label>物件を選ぶ</label><select id="vSel" aria-label="評価する物件"></select></div>
+  </div>
+  </div>
+  <p class="note" style="margin-bottom:10px">用語: NOI<button class="hlp" data-h="noi">?</button>　稼働率<button class="hlp" data-h="occrate">?</button>　CAPEX<button class="hlp" data-h="capex">?</button>　マスターリース<button class="hlp" data-h="ml">?</button>　グレードの決め方<button class="hlp" data-h="grade">?</button>　採点母集団<button class="hlp" data-h="vpool">?</button></p>
+  <div class="card" id="valCard"></div>
+</section>
+
+<!-- ========== 05 提言 ========== -->
+<section class="view" id="v-pb">
+  <div class="vtitle">
+    <div class="eyebrow">PLAYBOOK</div>
+    <h1 class="big">提言<span class="en">MOVES TO LIFT THE YIELD</span></h1>
+    <p class="lead">用語: AM<button class="hlp" data-h="am">?</button>　PM<button class="hlp" data-h="pm">?</button>　BM<button class="hlp" data-h="bm">?</button>　CAPEX<button class="hlp" data-h="capex">?</button>　フリーレント<button class="hlp" data-h="freerent">?</button><br>解剖から導かれる利回り向上の6手。<b>取得で決まる利回りを、運用で削らず、施策で上積みする</b>順序で並べ、根拠値は現在の絞込条件から再計算されます。</p>
+  </div>
+  <div class="playwrap plays" id="plays"></div>
+</section>
+
+<footer>
+  <div class="mono" style="letter-spacing:.08em">利瞰 RIKAN — J-REIT YIELD ANATOMY</div>
+  <div id="foot" style="margin-top:7px"></div>
+  <div style="margin-top:7px">出典: 各投資法人の決算短信・決算説明資料・有価証券報告書・ESG開示（2024年11月末〜2026年6月末時点、法人により異なる）。利回りは直近開示期の年換算値÷取得価格による簡便値で、鑑定NOI利回り・実勢キャップレートとは異なる。5軸評価は5軸すべてを算定できる199物件を母数とした相対評価。本アプリは情報提供目的であり投資勧誘ではない。</div>
+</footer>
+</main>
+
+<div class="hsheet" id="hsheet" role="dialog" aria-modal="true" aria-label="用語の説明">
+  <div class="bd" id="hbd"></div>
+  <div class="pn" id="hpn"></div>
+</div>
+<div id="errbar"></div>
+<nav class="bnav" id="bnav" aria-label="メインナビゲーション"></nav>

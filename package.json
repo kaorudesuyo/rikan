@@ -1,0 +1,19 @@
+{
+  "name": "rikan-app",
+  "version": "1.0.0",
+  "description": "利瞰 RIKAN — J-REIT Yield Anatomy. 外部依存ゼロの静的分析ダッシュボード",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "check": "node build.mjs --check",
+    "test": "node build.mjs && node tests/functional.test.mjs && node tests/stability.test.mjs && node tests/security.test.mjs && node tests/security2.test.cjs && node tests/security3.test.cjs && node tests/accuracy.test.cjs && node tests/integrity.test.cjs && node tests/docs.test.cjs && node tests/consistencyA.test.cjs && node tests/consistencyB.test.cjs && node tests/layout.test.cjs 390 260 && node tests/layout.test.cjs 1280 300",
+    "serve": "node -e \"import('node:http').then(({default:h})=>{import('node:fs').then(({readFileSync})=>{h.createServer((q,s)=>{try{const p=q.url==='/'?'/index.html':q.url;const b=readFileSync('public'+p);s.writeHead(200,{'Content-Type':p.endsWith('.html')?'text/html; charset=utf-8':'text/plain'});s.end(b)}catch(e){s.writeHead(404);s.end('not found')}}).listen(8080,()=>console.log('http://localhost:8080'))})})\""
+  },
+  "devDependencies": {
+    "jsdom": "^24.0.0"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,19 @@
+# ───────────────────────────────────────────────
+#  利瞰 RIKAN — Netlify 設定
+# ───────────────────────────────────────────────
+[build]
+  command = "node build.mjs"
+  publish = "public"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# セキュリティヘッダーとキャッシュ制御は build.mjs が public/_headers を生成する。
+# CSPのハッシュはビルドごとに変わるため、手書きせず必ずビルド生成物を使用すること。
+
+# www → apex へ正規化（独自ドメイン運用時）
+[[redirects]]
+  from = "https://www.:domain.:tld/*"
+  to = "https://:domain.:tld/:splat"
+  status = 301
+  force = true

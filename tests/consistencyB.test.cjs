@@ -1,0 +1,58 @@
+const {JSDOM}=require('jsdom');const fs=require('fs');
+const H=fs.readFileSync(__dirname+'/../public/index.html','utf8');
+const D=JSON.parse(H.match(/window\.__DATA__=(\[[\s\S]*?\]);<\/script>/)[1].replace(/\\u003c/g,'<').replace(/\\u003e/g,'>'));
+const ctx=()=>new Proxy({},{get:(t,k)=>{if(k==='measureText')return s=>({width:20});
+ if(['font','fillStyle','strokeStyle','lineWidth','textAlign','textBaseline'].includes(k))return t[k]||'';return ()=>{}},set:(t,k,v)=>{t[k]=v;return true}});
+const errs=[];const dom=new JSDOM(H,{runScripts:'dangerously',pretendToBeVisual:true,beforeParse(w){
+ w.HTMLCanvasElement.prototype.getContext=()=>ctx();
+ w.Element.prototype.getBoundingClientRect=()=>({left:0,top:0,width:900,height:320,right:900,bottom:320});
+ Object.defineProperty(w.HTMLElement.prototype,'clientWidth',{get(){return 900}});
+ Object.defineProperty(w.HTMLElement.prototype,'clientHeight',{get(){return 320}});
+ w.HTMLElement.prototype.scrollIntoView=()=>{};w.scrollTo=()=>{};w.addEventListener('error',e=>errs.push(e.message));}});
+const w=dom.window,d=w.document;
+const med=a=>{a=[...a].sort((x,y)=>x-y);const n=a.length;return n?(n%2?a[(n-1)/2]:(a[n/2-1]+a[n/2])/2):null};
+let NG=0;const ng=m=>{console.log('  NG '+m);NG++};
+setTimeout(()=>{
+ const B=D.filter(x=>x.a!=='XX');const bs=[...d.querySelectorAll('#segScope button')];
+ console.log('【監査6】提言の根拠値が用途スコープと整合するか');
+ [['OF',0],['RS',1]].forEach(([u,i])=>{bs[i].click();
+  [...d.querySelectorAll('#bnav button')][4].click();
+  const t=d.getElementById('plays').textContent.replace(/\s+/g,' ');
+  const V=B.filter(x=>x.u===u&&x.yra>0&&x.yra<15);
+  const m=t.match(/都心5区 ([\d.]+)%\(n=(\d+)\)/);
+  if(m){const c5=V.filter(x=>x.a==='C5').map(x=>x.yra);
+   if(+m[2]!==c5.length)ng(u+' 提言1のn 表示'+m[2]+' 実'+c5.length);
+   if(Math.abs(+m[1]-med(c5))>0.005)ng(u+' 提言1の値 表示'+m[1]+' 実'+med(c5).toFixed(2));}
+  if(d.querySelectorAll('#plays .play').length!==6)ng(u+' 提言が6件でない');
+  if(/undefined|NaN|—%/.test(t))ng(u+' 提言に異常表記');});
+ console.log('【監査7】戦略プロファイルが用途スコープと矛盾しないか');
+ bs[0].click();[...d.querySelectorAll('#bnav button')][0].click();
+ const st=d.getElementById('stratBody').textContent.replace(/\s+/g,' ');
+ if(/undefined|NaN/.test(st))ng('戦略カードに異常表記');
+ console.log('  戦略:',st.slice(0,50));
+ console.log('【監査8】PM会社ペインが用途スコープで整合するか');
+ [0,1].forEach(i=>{bs[i].click();[...d.querySelectorAll('#bnav button')][1].click();
+  [...d.querySelectorAll('#subtabs button')][3].click();
+  const t=d.getElementById('pmNote').textContent.replace(/\s+/g,' ');
+  const m=t.match(/([\d,]+)物件<?\/?b?>?（全([\d,]+)物件/)||t.match(/収録した ([\d,]+)物件（全([\d,]+)物件/);
+  const V=B.filter(x=>x.u===(i?'RS':'OF'));
+  if(m&&m[2].replace(/,/g,'')!==String(V.length))ng('PM分母 表示'+m[2]+' 実'+V.length);
+  if(/undefined|NaN/.test(t))ng('PMペインに異常表記');});
+ console.log('【監査9】物件一覧の件数と内容');
+ [0,1].forEach(i=>{bs[i].click();[...d.querySelectorAll('#bnav button')][2].click();
+  const rows=d.querySelectorAll('#plist .prow').length;
+  if(rows<1)ng('一覧が空');
+  const t=d.getElementById('plist').textContent;
+  if(/undefined|NaN/.test(t))ng('一覧に異常表記');
+  const V=B.filter(x=>x.u===(i?'RS':'OF'));
+  const h=d.getElementById('hits').textContent.replace(/[^\d]/g,'');
+  if(h!==String(V.length))ng('件数表示 '+h+' 実'+V.length);});
+ console.log('【監査10】スコープ往復で状態が壊れないか');
+ let sig=[];
+ for(let r=0;r<3;r++){[0,1].forEach(i=>{bs[i].click();
+   [...d.querySelectorAll('#bnav button')].forEach(b=>b.click());});}
+ bs[0].click();[...d.querySelectorAll('#bnav button')][3].click();
+ const v=[...d.querySelectorAll('#valCard .kpitab tbody tr')].map(r=>+r.querySelector('.pbar .p').textContent);
+ if(!v.every(x=>x===50))ng('往復後に基準線が崩れた: '+v.join(','));
+ console.log('\n=== 追加監査: 要修正 '+NG+' 件 / エラー '+errs.length+' ===');if(NG||errs.length)process.exitCode=1;
+},1000);
