@@ -14,17 +14,17 @@ const med=a=>{a=[...a].sort((x,y)=>x-y);const n=a.length;return n?(n%2?a[(n-1)/2
 let NG=0;const ng=m=>{console.log('  NG '+m);NG++};
 setTimeout(()=>{
  const B=D.filter(x=>x.a!=='XX');const bs=[...d.querySelectorAll('#segScope button')];
- console.log('【監査6】提言の根拠値が用途スコープと整合するか');
- [['OF',0],['RS',1]].forEach(([u,i])=>{bs[i].click();
-  [...d.querySelectorAll('#bnav button')][4].click();
-  const t=d.getElementById('plays').textContent.replace(/\s+/g,' ');
-  const V=B.filter(x=>x.u===u&&x.yra>0&&x.yra<15);
-  const m=t.match(/都心5区 ([\d.]+)%\(n=(\d+)\)/);
-  if(m){const c5=V.filter(x=>x.a==='C5').map(x=>x.yra);
-   if(+m[2]!==c5.length)ng(u+' 提言1のn 表示'+m[2]+' 実'+c5.length);
-   if(Math.abs(+m[1]-med(c5))>0.005)ng(u+' 提言1の値 表示'+m[1]+' 実'+med(c5).toFixed(2));}
-  if(d.querySelectorAll('#plays .play').length!==6)ng(u+' 提言が6件でない');
-  if(/undefined|NaN|—%/.test(t))ng(u+' 提言に異常表記');});
+ console.log('【監査6】GRESBページの整合');
+ [...d.querySelectorAll('#bnav button')][4].click();
+ const gs=d.querySelectorAll('#grStars tbody tr').length;
+ if(gs!==18)ng('GRESB星数テーブルが18行でない: '+gs);
+ if(d.querySelectorAll('#grLever .play').length<3)ng('GRESBの打ち手が3件未満');
+ if(d.querySelectorAll('#grNext tbody tr').length<5)ng('2026変更が5行未満');
+ if(!d.querySelector('.gresb-logo'))ng('GRESBロゴがない');
+ [...d.querySelectorAll('#segGrComp button')].forEach(b=>{b.click();
+   const t2=d.getElementById('grIndNote').textContent;
+   if(/undefined|NaN/.test(t2))ng('GRESB指標注記に異常表記')});
+ if(/提言|PLAYBOOK/.test(d.body.innerHTML))ng('提言の残存');
  console.log('【監査7】戦略プロファイルが用途スコープと矛盾しないか');
  bs[0].click();[...d.querySelectorAll('#bnav button')][0].click();
  const st=d.getElementById('stratBody').textContent.replace(/\s+/g,' ');

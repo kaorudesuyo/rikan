@@ -19,7 +19,7 @@ const def=new Set([...help.matchAll(/^([a-z_]+):\{c:'/gm)].map(m=>m[1]));
 [...new Set([...app.matchAll(/HB\('([a-z_]+)'/g)].map(m=>m[1]))].forEach(k=>{if(!def.has(k))NG('HB未定義 '+k)});
 console.log('  定義'+def.size+'項目');
 console.log('【第3巡】旧仕様の残存');
-[[/稼働安定(?!（期末稼働率）)/g,'旧軸名'],[/延床面積/g,'削除指標'],[/203物件|198物件/g,'旧物件数'],
+[[/稼働安定(?!（期末稼働率）)/g,'旧軸名'],[/segX[^)]*延床面積/g,'削除指標（軸の選択肢）'],[/203物件|198物件/g,'旧物件数'],
  [/認証数＋DBJ星数/g,'旧環境スコア'],[/0\.279/g,'旧相関値'],[/横軸が築年数/g,'旧軸固定'],
  [/取得価格<\/b>ベースの実績値/g,'旧利回り基準']].forEach(([re,l])=>{
  [[help,'help'],[body,'body'],[app,'app']].forEach(([s,n])=>{const m=s.match(re);if(m)NG(l+' in '+n+' ×'+m.length)})});

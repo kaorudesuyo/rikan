@@ -14,7 +14,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="利瞰">
 <meta name="application-name" content="利瞰 RIKAN">
-<meta name="description" content="J-REITオフィス系16法人・1,257物件の開示データを、AM・PM・BM・建築の視点で解剖する分析ダッシュボード。">
+<meta name="description" content="J-REITオフィス系18法人・1,311物件の開示データを、AM・PM・BM・建築の視点で解剖する分析ダッシュボード。">
 <style>
 :root{
   --bg:#0a0a0a; --panel:#111214; --panel2:#16171b; --line:#26282c; --line2:#34373d;
@@ -233,6 +233,28 @@ canvas{touch-action:manipulation;display:block}
 @media (prefers-reduced-motion:reduce){
   #splash svg{animation:none}
   #splash{animation:spFade .2s ease forwards}}
+
+/* ---- 物件タブの絞込 ---- */
+.prfilters{display:grid;grid-template-columns:1fr;gap:8px;margin:12px 0 14px}
+@media(min-width:640px){.prfilters{grid-template-columns:repeat(3,1fr)}}
+.prfilters .sel{margin:0}
+.prfilters .sel.on select{border-color:var(--gold);color:var(--gold)}
+.prfilters .sel.on label{color:var(--gold)}
+
+/* ---- 並び替え（方向トグル付きの1ボタン） ---- */
+.sortbar{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.sortbtn{display:inline-flex;align-items:center;gap:7px;background:var(--card);color:var(--dim);
+  border:1px solid var(--line);border-radius:999px;padding:8px 15px;font-size:12.5px;
+  font-family:inherit;cursor:pointer;transition:.16s;letter-spacing:.02em;white-space:nowrap}
+.sortbtn:hover{border-color:#3a3a3a;color:var(--tx)}
+.sortbtn.on{background:rgba(200,163,95,.10);border-color:var(--gold);color:var(--gold)}
+.sortbtn .dir{font-family:var(--mono);font-size:14px;line-height:1;opacity:.45;transition:.16s}
+.sortbtn.on .dir{opacity:1}
+.sortbtn.on:hover .dir{transform:scale(1.18)}
+/* ---- GRESB ---- */
+.gresb-head{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.gresb-logo{width:104px;height:auto;flex:0 0 auto}
+@media(max-width:520px){.gresb-logo{width:76px}.gresb-head{gap:14px}}
 /* ---- 用途スコープバー ---- */
 .scopehit{font-family:var(--mono);font-size:10px;color:var(--dim);margin-left:auto;white-space:nowrap}
 .scopebar{display:flex;align-items:center;gap:10px;padding:9px 14px 10px;max-width:var(--mw);margin:0 auto;border-top:1px solid var(--line)}
